@@ -3,10 +3,10 @@ pragma solidity >=0.5.0 <0.7.0;
 
 /**
   @title loanDB
-  @dev stores all the information 
+  @dev stores all the information
   @author Bhasin Neeraj
  */
-contract Microfinance {
+contract LoanDB {
     //creating a loan state
     enum LoanState {PENDING, ACTIVE, CLOSED}
     //STRUCTURE
@@ -21,6 +21,7 @@ contract Microfinance {
     }
     //MODALS
     /**
+    @dev
       1. mapping the _id to add the debt information
       2. storing debt info with borrower addr
       3. storing debt info with borrower lender
@@ -72,6 +73,14 @@ contract Microfinance {
 
     function paidDebt(uint256 _id) external {
         debtInfo[_id].loanState = uint8(LoanState.CLOSED);
+    }
+
+    function setHaveDebt(address _sender, bool _state) external {
+        haveDebt[_sender] = _state;
+    }
+
+    function checkHaveDebt(address _address) external view returns (bool) {
+        return haveDebt[_address];
     }
 
     function getLenderofDebt(uint256 _id) external view returns (address) {

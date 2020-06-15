@@ -27,6 +27,6 @@ contract LoanWallet {
     function withdraw(address payable _to, uint256 _amount) public {
         _balance[_to] = _balance[_to].sub(_amount);
         _to.transfer(_amount);
-        emit Deposited(_to, _amount);
+        emit Withdrawal(_to, _amount);
     }
 }
