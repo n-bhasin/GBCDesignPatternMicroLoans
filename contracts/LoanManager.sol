@@ -11,22 +11,18 @@ import "./LoanWallet.sol";
 contract LoanManager is LoanDB, LoanWallet {
     constructor() public {}
 
-    function requestForLoan(
-        uint256 _debtNo,
-        address _borrower,
-        uint256 _amount
-    ) external {
-        require(_amount >= 1e16 wei, "The amount is too small to borrow");
-        require(
-            LoanDB(address(this)).getBorrowerofDebt(_debtNo) == address(0),
-            "debt exists"
-        );
+    function requestForLoan(address _borrower, uint256 _amount) external {
+        // require(_amount >= 1e16 wei, "The amount is too small to borrow");
+        // require(
+        //     LoanDB(address(this)).getBorrowerofDebt(_debtNo) == address(0),
+        //     "debt exists"
+        // );
         require(
             LoanDB(address(this)).checkHaveDebt(_borrower) == false,
             "already have Debt"
         );
         uint256 _interest = (_amount.mul(5)).div(100);
-        LoanDB(address(this)).addDebt(_debtNo, _borrower, _amount, _interest);
+        LoanDB(address(this)).addDebt(_borrower, _amount, _interest);
     }
 
     function lendLoan(uint256 _debtNo, address _sender) external payable {
